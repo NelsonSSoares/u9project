@@ -1,2 +1,2 @@
 # ibm-shop-backend
-IBM Shop Backend User Api Repository
+IBM Shop Backend User Api Repositories
