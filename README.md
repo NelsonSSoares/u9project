@@ -3,6 +3,36 @@
 
 <hr>
 
+<h2>Sumário</h2>
+<ul>
+   <li><a href="https://github.ibm.com/Caio-Figueiredo-de-Souza/ibmshop-backend-user-api#modelagem-do-banco-de-dados">Modelagem do Banco de Dados</a></li>
+
+   <li><a href="https://github.ibm.com/Caio-Figueiredo-de-Souza/ibmshop-backend-user-api#consulta">Consulta</a></li>
+   <ul>
+      <li><a href="https://github.ibm.com/Caio-Figueiredo-de-Souza/ibmshop-backend-user-api#cenario--1-consulta--por-id">Cenário 1: Consulta por ID</a></li>
+      <li><a href="https://github.ibm.com/Caio-Figueiredo-de-Souza/ibmshop-backend-user-api#cenario--2-consulta--por-cpf">Cenário 2: Consulta por CPF</a></li>
+      <li><a href="https://github.ibm.com/Caio-Figueiredo-de-Souza/ibmshop-backend-user-api#cenario--3-consulta--por-nome">Cenario 3: Consulta por nome</a></li>
+      <li><a href="https://github.ibm.com/Caio-Figueiredo-de-Souza/ibmshop-backend-user-api#cenario--4-usu%C3%A1rio-n%C3%A3o-encontrado">Cenario 4: Usuário não encontrado</a></li>
+      <li><a href="https://github.ibm.com/Caio-Figueiredo-de-Souza/ibmshop-backend-user-api#cenario--5-campos-obrigat%C3%B3rios-n%C3%A3o-preenchidos">Cenário 5: Campos obrigatórios não preenchidos</a></li>
+      <li><a href="https://github.ibm.com/Caio-Figueiredo-de-Souza/ibmshop-backend-user-api#cenario--6-informar-campos-inv%C3%A1lidos">Cenario 6: Informar campos inválidos</a></li>
+   </ul>
+
+   <li><a href="https://github.ibm.com/Caio-Figueiredo-de-Souza/ibmshop-backend-user-api#manuten%C3%A7%C3%A3o">Manutenção</a></li>
+   <ul>
+      <li><a href="https://github.ibm.com/Caio-Figueiredo-de-Souza/ibmshop-backend-user-api#cenario--1-cadastrar-usu%C3%A1rio">Cenario 1: cadastrar usuário</a></li>
+      <li><a href="https://github.ibm.com/Caio-Figueiredo-de-Souza/ibmshop-backend-user-api#cenario--2-n%C3%A3o-informar-os-campos-obrigat%C3%B3rios">Cenario 2: não informar os campos obrigatórios</a></li>
+      <li><a href="https://github.ibm.com/Caio-Figueiredo-de-Souza/ibmshop-backend-user-api#cenario--3-informar-um-usu%C3%A1rio-j%C3%A1-cadastrado">Cenario 3: informar um usuário já cadastrado</a></li>
+      <li><a href="https://github.ibm.com/Caio-Figueiredo-de-Souza/ibmshop-backend-user-api#cenario--4-editar-usu%C3%A1rio">Cenario 4: editar usuário</a></li>
+      <li><a href="https://github.ibm.com/Caio-Figueiredo-de-Souza/ibmshop-backend-user-api#cenario--5-excluir-usu%C3%A1rio">Cenario 5: excluir usuário</a></li>
+      <li><a href="https://github.ibm.com/Caio-Figueiredo-de-Souza/ibmshop-backend-user-api#cenario--6-informar-campos-inv%C3%A1lidos-1">Cenario 6: informar campos inválidos</a></li>
+      <li><a href="https://github.ibm.com/Caio-Figueiredo-de-Souza/ibmshop-backend-user-api#cenario--7-persist%C3%AAncia-de-endere%C3%A7o">Cenario 7: persistência de Endereço</a></li>
+      <li><a href="https://github.ibm.com/Caio-Figueiredo-de-Souza/ibmshop-backend-user-api#cenario--8-persist%C3%AAncia-de-country">Cenario 8: persistência de Country</a></li>
+   </ul>
+</ul>
+
+
+<hr>
+
 <h2>Modelagem do Banco de Dados</h2>
 <p>Aqui vocês podem encontrar todas as entidades do banco de dados, seus atributos e os seus relacionamentos.</p>
 <img src="./readme-files/diagrama_db.png" />
@@ -17,7 +47,7 @@
 
 <h3>Cenários</h3>
 
-<h3><strong>Cenario  1:</strong> Consulta  por id</h3>
+<h3><strong>Cenário  1:</strong> Consulta  por id</h3>
 
 <ul>
    <li>O usuário informa um id existente.</li>
@@ -62,7 +92,7 @@
 
 <hr>
  
-<h3><strong>Cenario  2:</strong> Consulta  por CPF</h3>
+<h3><strong>Cenário  2:</strong> Consulta  por CPF</h3>
 
 <ul>
    <li>O usuário informa um CPF existente e válido.</li>
@@ -132,7 +162,7 @@
 
 <hr>
 
-<h3><strong>Cenario  3:</strong> Consulta  por nome</h3>
+<h3><strong>Cenário  3:</strong> Consulta  por nome</h3>
 <ul>
    <li>O usuário informa um nome existente e válido.</li>
    <ul>
@@ -191,7 +221,7 @@
 
 <hr>
 
-<h3><strong>Cenario  4:</strong> Usuário não encontrado</h3>
+<h3><strong>Cenário  4:</strong> Usuário não encontrado</h3>
 <ul>
    <li>Nenhum Usuario foi encontrado dados os valores informados.</li>
    <ul>
@@ -201,7 +231,7 @@
 
 <hr>
 
-<h3><strong>Cenario  5:</strong> Campos obrigatórios não preenchidos</h3>
+<h3><strong>Cenário  5:</strong> Campos obrigatórios não preenchidos</h3>
 <ul>
    <li>O usuário tenta realizar uma busca sem preencher os campos obrigatórios.</li>
    <ul>
@@ -211,7 +241,7 @@
 
 <hr>
 
-<h3><strong>Cenario  6:</strong> Informar campos inválidos</h3>
+<h3><strong>Cenário  6:</strong> Informar campos inválidos</h3>
 <ul>
    <li>O usuário informa campos inválidos durante uma busca.</li>
    <ul>
@@ -236,7 +266,7 @@ Cenários
 
 <h3>Cenários:</h3>
   
-<h3><strong>Cenario  1:</strong> cadastrar usuário</h3>
+<h3><strong>Cenário  1:</strong> cadastrar usuário</h3>
 <ul>
    <li>Nome</li>
    <ul>
