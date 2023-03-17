@@ -4,16 +4,16 @@
 ---
 
 ## Sumário
-1. [Modelo de Banco de Dados]()
-2. [Consulta]()
-   - [Cenário 1: Consulta por id]()
-   - [Cenário 2: Consulta por CPF]()
-   - [Cenário 3: Consulta por nome]()
-3. [Manutenção]()
-   - [Cenário 1: Cadastrar usuário]()
-   - [Cenário 2: Editar usuário]()
-   - [Cenário 3: Excluir usuário]()
-   - [Cenário 4: Reativar usuário]()
+1. [Modelo de Banco de Dados](https://github.ibm.com/Caio-Figueiredo-de-Souza/ibmshop-backend-user-api#modelo-de-banco-de-dados)
+2. [Consulta](https://github.ibm.com/Caio-Figueiredo-de-Souza/ibmshop-backend-user-api#consulta)
+   - [Cenário 1: Consulta por id](https://github.ibm.com/Caio-Figueiredo-de-Souza/ibmshop-backend-user-api#cen%C3%A1rio-1-consulta-por-id)
+   - [Cenário 2: Consulta por CPF](https://github.ibm.com/Caio-Figueiredo-de-Souza/ibmshop-backend-user-api#cen%C3%A1rio-2-consulta-por-cpf)
+   - [Cenário 3: Consulta por nome](https://github.ibm.com/Caio-Figueiredo-de-Souza/ibmshop-backend-user-api#cen%C3%A1rio-3-consulta-por-nome)
+3. [Manutenção](https://github.ibm.com/Caio-Figueiredo-de-Souza/ibmshop-backend-user-api#manuten%C3%A7%C3%A3o)
+   - [Cenário 1: Cadastrar usuário](https://github.ibm.com/Caio-Figueiredo-de-Souza/ibmshop-backend-user-api#cen%C3%A1rio--1-cadastrar-usu%C3%A1rio)
+   - [Cenário 2: Editar usuário](https://github.ibm.com/Caio-Figueiredo-de-Souza/ibmshop-backend-user-api#cenario-2-editar-usu%C3%A1rio)
+   - [Cenário 3: Excluir usuário](https://github.ibm.com/Caio-Figueiredo-de-Souza/ibmshop-backend-user-api#cenario-3-excluir-usu%C3%A1rio)
+   - [Cenário 4: Reativar usuário](https://github.ibm.com/Caio-Figueiredo-de-Souza/ibmshop-backend-user-api#cen%C3%A1rio-4-reativar-usu%C3%A1rio)
 
 ---
 
