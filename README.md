@@ -174,6 +174,10 @@ Aqui vocês podem encontrar todas as entidades do banco de dados, seus atributos
          | :----------------------------------: |
          | 12345-678                            |
 
+   - **Bairro**
+      - Obrigatorio
+      - Tamanho máximo de 45 caracteres
+
    - **Cidade**
       - Obrigatório
       - Tamanho máximo de 45 caracteres
