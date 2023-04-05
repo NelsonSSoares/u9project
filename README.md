@@ -36,8 +36,12 @@ Aqui vocês podem encontrar todas as entidades do banco de dados, seus atributos
 ### Cenários
 
 #### **Cenário 1:** Consulta por Id
+**Role:** Admin  
+**Tipo de Req.:** GET  
 
-**O usuário informa um id existente de um usuário ativo no sistema.**
+**O usuário informa um id existente de um usuário ativo no sistema.**  
+Deve retornar os dados do usuário e um código de sucesso.
+   - Código: 200 - OK
    - Retorna os seguintes dados da entidade Usuario:
     
       | Campo            | Valor esperado                |
@@ -50,14 +54,20 @@ Aqui vocês podem encontrar todas as entidades do banco de dados, seus atributos
       | data_criacao     | Data da criação do usuário    |
       | data_modificacao | Data de update do usuário     |
 
-**O usuário informa um id inexistente ou o id de um usuário inativo no sistema.**
-   - Retorna uma mensagem: _“Desculpe, não foi possível encontrar um usuário com este id. Verifique e tente novamente.”_
+**O usuário informa um id inexistente ou o id de um usuário inativo no sistema.**  
+Deve retornar um código de erro e uma mensagem apropriada.
+   - Código: 404
+   - Mensagem: _“Desculpe, não foi possível encontrar um usuário com este id. Verifique e tente novamente.”_
 
 ---
 
-#### **Cenário 2:** Consulta por CPF
+#### **Cenário 2:** Consulta por CPF  
+**Role:** Admin  
+**Tipo de Req.:** GET  
 
-**O usuário informa um CPF existente e válido de um usuário ativo no sistema.**
+**O usuário informa um CPF existente e válido de um usuário ativo no sistema.**  
+Deve retornar os dados do usuário e um código de sucesso.
+   - 200 - OK
    - Retorna os seguintes dados da entidade Usuario:
 
       | Campo            | Valor esperado                |
@@ -70,23 +80,34 @@ Aqui vocês podem encontrar todas as entidades do banco de dados, seus atributos
       | data_criacao     | Data da criação do usuário    |
       | data_modificacao | Data de update do usuário     |
 
-**O usuário informa um CPF inexistente ou o CPF de um usuário inativo no sistema.**
-   - Retorna uma mensagem: _“Desculpe, não foi possível encontrar um usuário com este cpf. Verifique e tente novamente.”_
+**O usuário informa um CPF inexistente ou o CPF de um usuário inativo no sistema.**  
+Deve retornar um código de erro e uma mensagem apropriada.
+   - Código: 404 - Not Found
+   - Mensagem: _“Desculpe, não foi possível encontrar um usuário com este cpf. Verifique e tente novamente.”_
 
-**O usuário informa um CPF em um formato inválido.**
-   - Retorna uma mensagem: _“Desculpe, não foi possível realizar a busca por CPF. O CPF não foi digitado corretamente. Verifique e tente novamente.”_
+**O usuário informa um CPF em um formato inválido.**  
+Deve retornar um código de erro e uma mensagem apropriada.
+   - Código: 400 - Bad Request
+   - Mensagem: _“Desculpe, não foi possível realizar a busca por CPF. O CPF não foi digitado corretamente. Verifique e tente novamente.”_
 
       | Exemplo de **formato** válido de CPF |
       |:-----------------------------------: |
       |           123.456.789-10             |
 
-**O usuário não informa um CPF.**
-   - Retorna uma mensagem: _“Desculpe, não foi possível realizar a busca por CPF. Digite um CPF e tente novamente.”_
+**O usuário não informa um CPF.**  
+Deve retornar um código de erro e uma mensagem apropriada.
+   - Código: 400 - Bad Request
+   - Mensagem: _“Desculpe, não foi possível realizar a busca por CPF. Digite um CPF e tente novamente.”_
 
 ---
 
 ### **Cenário 3:** Consulta por nome
-**O usuário informa um nome existente e válido.**
+**Role:** Admin  
+**Tipo de Req.:** GET  
+
+**O usuário informa um nome existente e válido.**  
+Deve retornar os dados do usuário e um código de sucesso.
+   - Código: 200 - OK
    - Retorna os seguintes dados da entidade Usuario, para **todos** os registros encontrados de usuários que estão ativos no sistema:
 
       | Campo            | Valor esperado               |
@@ -99,14 +120,20 @@ Aqui vocês podem encontrar todas as entidades do banco de dados, seus atributos
       | data_criacao     | Data da criação do usuário   |
       | data_modificacao | Data de update do usuário    |   
 
-**O usuário informa um nome inexistente.**
-   - Retorna uma mensagem: _“Não foi possível encontrar um usuário com este nome. Verifique e tente novamente.”_
+**O usuário informa um nome inexistente.**  
+Deve retornar um código de erro e uma mensagem apropriada.
+   - Código: 404 - Not Found
+   - Mensagem: _“Não foi possível encontrar um usuário com este nome. Verifique e tente novamente.”_
 
-**O usuário informa um nome com menos de 2 caracteres.**
-   - Retorna uma mensagem: _“Desculpe, não foi possível realizar a busca por nome. O nome informado deve ter, pelo menos, 2 caracteres."_
+**O usuário informa um nome com menos de 2 caracteres.**  
+Deve retornar um código de erro e uma mensagem apropriada.
+   - Código: 400 - Bad Request
+   - Mensagem: _“Desculpe, não foi possível realizar a busca por nome. O nome informado deve ter, pelo menos, 2 caracteres."_
 
-**O usuário não informa um nome**
-   - Retorna uma mensagem: _“Desculpe, não foi possível realizar a busca por nome. Digite um nome e tente novamente.”_
+**O usuário não informa um nome**  
+Deve retornar um código de erro e uma mensagem apropriada.
+   - Código: 400 - Bad Request
+   - Mensagem: _“Desculpe, não foi possível realizar a busca por nome. Digite um nome e tente novamente.”_
 
 ---
 
@@ -122,6 +149,8 @@ Aqui vocês podem encontrar todas as entidades do banco de dados, seus atributos
 ### Cenários
   
 #### **Cenário  1:** Cadastrar usuário
+**Role:** User  
+**Tipo de Req.:** POST  
 
 **Nome**
    - Obrigatório
@@ -244,28 +273,52 @@ Aqui vocês podem encontrar todas as entidades do banco de dados, seus atributos
    </code>
 </pre>
 
-**Campos obrigatórios não preenchidos**   
-   - Retorna uma mensagem: _"Não foi possível cadastrar o usuário. O campo ``nome_do_campo`` é obrigatório. Verifique e tente novamente."_
+**Usuário cadastrado com sucesso**  
+Deve retornar um código de sucesso e uma mensagem apropriada.
+   - Código: 201 - Created
+   - Mensagem: _"Usuário cadastrado com sucesso!"_
+   
+**Campos obrigatórios não preenchidos**  
+Deve retornar um código de erro e uma mensagem apropriada.
+   - Código: 400 - Bad Request   
+   - Mensagem: _"Não foi possível cadastrar o usuário. O campo ``nome_do_campo`` é obrigatório. Verifique e tente novamente."_
 
 **Usuário já existente**  
-O usuário tenta cadastrar um usuário com um CPF que já está cadastrado no sistema.
-   - Retorna uma mensagem: _"Não foi possível cadastrar o usuário. Já existe um usuário cadastrado com este CPF. Verifique e tente novamente."_
+O usuário tenta cadastrar um usuário com um CPF que já está cadastrado no sistema.  
+Deve retornar um código de erro e uma mensagem apropriada.
+   - Código: 409 - Conflict
+   - Mensagem: _"Não foi possível cadastrar o usuário. Já existe um usuário cadastrado com este CPF. Verifique e tente novamente."_
 
 ---
 
 #### **Cenario 2:** Editar usuário
+**Role:** User  
+**Tipo de Req.:** UPDATE  
 
-**Id não informado**   
-   - Retorna uma mensagem: _"Não é possível editar um usuário sem especificar um id. Verifique e tente novamente."_
+**Usuário atualizado com sucesso**  
+Deve retornar um código de sucesso e uma mensagem apropriada.
+   - Código: 200 - OK
+   - Mensagem: _"Usuário atualizado com sucesso!"_
 
-**O usuário informa um id inexistente ou de um usuário inativo**
-   - Retorna uma mensagem: _"Não existe nenhum usuário com esse id. Verifique e tente novamente."_
+**Id não informado**  
+Deve retornar um código de erro e uma mensagem apropriada.
+   - Código: 400 - Bad Request
+   - Mensagem: _"Não é possível editar um usuário sem especificar um id. Verifique e tente novamente."_
 
-**O usuário não pode alterar o CPF**
-   - Retorna uma mensagem: _"Não foi possível atualizar as suas informações. Não é permitido alterar o CPF."_
+**O usuário informa um id inexistente ou de um usuário inativo**  
+Deve retornar um código de erro e uma mensagem apropriada.
+   - Código: 404 - Not Found
+   - Mensagem: _"Não existe nenhum usuário com esse id. Verifique e tente novamente."_
 
-**O telefone deve estar em um formato válido**
-   - Retorna uma mensagem: _"Não foi possível atualizar as suas informações. O telefone não está em um formato válido. Verifique e tente novamente."_
+**O usuário não pode alterar o CPF**  
+Deve retornar um código de erro e uma mensagem apropriada.
+   - Código: 409 - Conflict
+   - Mensagem: _"Não foi possível atualizar as suas informações. Não é permitido alterar o CPF."_
+
+**O telefone deve estar em um formato válido**  
+Deve retornar um código de erro e uma mensagem apropriada.
+   - Código: 400 - Bad Request
+   - Mensagem: _"Não foi possível atualizar as suas informações. O telefone não está em um formato válido. Verifique e tente novamente."_
       | Exemplos de **formato** válido de Telefone   |
       | :------------------------------------------: |
       | +xxx (xx) xxxxx-xxxx                         |
@@ -273,15 +326,19 @@ O usuário tenta cadastrar um usuário com um CPF que já está cadastrado no si
       | +xx (xx) xxxxx-xxxx                          |
       | +xx (xx) xxxx-xxxx                           |
 
-**O CEP deve estar em um formato válido**
-   - Retorna uma mensagem: _"Não foi possível atualizar as suas informações. O CEP não está em um formato válido. Verifique e tente novamente."_
+**O CEP deve estar em um formato válido**  
+Deve retornar um código de erro e uma mensagem apropriada.
+   - Código: 400 - Bad Request
+   - Mensagem: _"Não foi possível atualizar as suas informações. O CEP não está em um formato válido. Verifique e tente novamente."_
       | Exemplo de **formato** de CEP válido |
       | :----------------------------------: |
       | 12345-678                            |
 
 
-**O código do país deve estar em um formato válido**
-   - Retorna uma mensagem: _"Não foi possível atualizar as suas informações. O código prefixo do país não está em um formato válido. Verifique e tente novamente."_
+**O código do país deve estar em um formato válido**  
+Deve retornar um código de erro e uma mensagem apropriada.
+   - Código: 400 - Bad Request
+   - Mensagem: _"Não foi possível atualizar as suas informações. O código prefixo do país não está em um formato válido. Verifique e tente novamente."_
       | Exemplo de **formato** de código válido |
       | :-------------------------------------: |
       | +12                                     |
@@ -290,35 +347,62 @@ O usuário tenta cadastrar um usuário com um CPF que já está cadastrado no si
 ---
 
 #### **Cenario 3:** Excluir usuário
+**Role:** User  
+**Tipo de Req.:** UPDATE  
 
-**Id não informado**   
-   - Retorna uma mensagem: _"Não é possível excluir um usuário sem especificar um id. Verifique e tente novamente."_
+**Usuário desativado/excluído com sucesso**  
+Deve retornar um código de sucesso e uma mensagem apropriada.
+   - Código: 200 - OK
+   - Mensagem: _"A conta desativada com sucesso!"_
 
-**Id inexistente**
-   - Retorna uma mensagem: _"Não existe nenhum usuário com esse id. Verifique e tente novamente."_
+**Id não informado**  
+Deve retornar um código de erro e uma mensagem apropriada.
+   - Código: 400 - Bad Request
+   - Mensagem: _"Não é possível excluir um usuário sem especificar um id. Verifique e tente novamente."_
+
+**Id inexistente**  
+Deve retornar um código de erro e uma mensagem apropriada.
+   - Código: 404 - Not Found
+   - Mensagem: _"Não existe nenhum usuário com esse id. Verifique e tente novamente."_
 
 **Exclusão lógica de dados**  
 >Ao excluir um usuário, os dados pessoais dele, bem como o endereço atrelado a ele, não devem ser excluídos >físicamente do banco de dados.  
 >Para executar a exclusão lógica dos dados do usuário desejado, altere o valor do atributo ``ativo`` para ``false``. Isso irá simbolizar que aquele usuário não está inativo no sistema.
 
-**Tentativa de desativar a conta de um usuário que já está desativada:**
-   - Retorna uma mensagem: _"Este usuário já está com a conta desativada."_
+**Tentativa de desativar/excluir a conta de um usuário que já está desativada:**  
+Deve retornar um código de erro e uma mensagem apropriada.
+   - Código: 409 - Conflict
+   - Mensagem: _"Este usuário já está com a conta desativada."_
 
 
 ---
 
-#### **Cenário 4:** Reativar usuário
+#### **Cenário 4:** Reativar usuário  
+**Role:** User  
+**Tipo de Req.:** UPDATE  
+
 >Deve ser possível reativar o registro de um usuário que está desativado.  
 >Nesse caso, o atributo ``ativo`` do usuário que se deseja reativar, deve ter o seu valor modificado de ``false`` para ``true``.  
 >Em outras palavras, ``ativo = false --> ativo = true``.
 
-**Id não informado**   
-   - Retorna uma mensagem: _"Não é possível reativar um usuário sem especificar um id. Verifique e tente novamente."_
+**Usuário reativado com sucesso**  
+Deve retornar um código de sucesso e uma mensagem apropriada.
+   - Código: 200 - OK
+   - Mensagem: _"A conta foi reativada com sucesso!"_
+
+**Id não informado**  
+Deve retornar um código de erro e uma mensagem apropriada.
+   - Código: 400 - Bad Request
+   - Mensagem: _"Não é possível reativar um usuário sem especificar um id. Verifique e tente novamente."_
 
 **Id inexistente**
-   - Retorna uma mensagem: _"Não existe nenhum usuário com esse id. Verifique e tente novamente."_
+Deve retornar um código de erro e uma mensagem apropriada.
+   - Código: 404 - Not Found
+   - Mensagem: _"Não existe nenhum usuário com esse id. Verifique e tente novamente."_
 
-**Tentativa de reativar a conta de um usuário que já está ativa:**
-   - Retorna uma mensagem: _"Este usuário já possui está com a conta ativa."_
+**Tentativa de reativar a conta de um usuário que já está ativa:**  
+Deve retornar um código de erro e uma mensagem apropriada.
+   - Código: 409 - Conflict
+   - Mensagem: _"Este usuário já possui está com a conta ativa."_
 
 ---
