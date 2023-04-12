@@ -1,5 +1,0 @@
-.classpath
-.facorypath
-.project
-.settings
-bin
