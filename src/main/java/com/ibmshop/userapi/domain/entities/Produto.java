@@ -1,17 +1,15 @@
 package com.ibmshop.userapi.domain.entities;
 
+import java.math.BigDecimal;
 import java.sql.Date;
-import java.util.List;
-
-import org.hibernate.validator.constraints.br.CPF;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -22,42 +20,41 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "usuario")
-public class Usuario {
+@Table(name = "detalhes_pedido")
+public class Produto {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
-	@Column(length = 255)
-	@NotEmpty(message = "{}")
-	private String nome;
+	@ManyToOne
+	@JoinColumn(name = "subcategoria_id")
+	private SubCategoria subcategoriaId;
 	
-	@Column(length = 255)
-	@NotEmpty(message = "{}")
-	private String sobrenome;
+	@ManyToOne
+	@JoinColumn(name = "categoria_id")
+	private Categoria categoriaId;
 	
-	@Column(length = 14)
 	@NotEmpty(message = "{}")
-	@CPF(message = "{}")
-	private String cpf;
+	@Column(name = "nome_produto", length = 45)
+	private String nomeProduto;
 	
-	@Column(length = 20)
-	@NotEmpty(message = "{}")
-	private String telefone;	
+	@NotEmpty
+	@Column(length = 45)
+	private String descricao;
 	
-	@Column(name = "data_criacao")
 	@NotEmpty(message = "{}")
+	private Integer sku;
+	
+	@NotEmpty(message = "{}")
+	@Column(name = "data_criacao", length = 45)
 	private Date dataCriacao;
 	
-	@Column(name = "data_modificacao")
 	@NotEmpty(message = "{}")
-	private Date dataModificacao;
+	@Column(name ="valor_unitario", precision = 20, scale = 2, length = 100)
+	private BigDecimal valorUnitario;
 	
 	@NotEmpty(message = "{}")
-	private byte ativo;
 	
-	@OneToMany(mappedBy = "cliente" ,fetch = FetchType.LAZY)
-	private List<Endereco> enderecoId;
-
+	private Integer estoque;
 }
