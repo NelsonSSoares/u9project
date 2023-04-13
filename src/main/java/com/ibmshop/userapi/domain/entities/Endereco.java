@@ -50,13 +50,11 @@ public class Endereco {
 	
 	@ManyToOne
 	@JoinColumn(name = "pais_id")
-	@Column(name = "pais_id" )
 	private Pais paisId;
 	
 	@ManyToOne
 	@JoinColumn(name = "usuario_id")
-	@Column(name = "usuario_id")
-	private String usuarioId;
+	private Usuario usuarioId;
 	
 	private byte enderecoPadrao;
 	

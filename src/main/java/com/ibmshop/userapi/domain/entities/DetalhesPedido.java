@@ -1,4 +1,4 @@
-package com.ibmshop.userapi.domain.entities;
+/*package com.ibmshop.userapi.domain.entities;
 
 import java.math.BigDecimal;
 
@@ -34,3 +34,4 @@ public class DetalhesPedido {
 	
 	
 }
+*/
