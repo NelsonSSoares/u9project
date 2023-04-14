@@ -5,8 +5,12 @@ import java.util.List;
 
 import org.hibernate.validator.constraints.br.CPF;
 
+import com.ibmshop.userapi.domain.enums.Pergunta;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -55,7 +59,8 @@ public class Usuario {
 	private Date dataModificacao;
 	
 	@NotEmpty(message = "{}")
-	private byte ativo;
+	@Enumerated(EnumType.ORDINAL)
+	private Pergunta ativo;
 	
 	@OneToMany // (mappedBy = "endereco" ,fetch = FetchType.LAZY)
 	@JoinColumn(name = "endereco")

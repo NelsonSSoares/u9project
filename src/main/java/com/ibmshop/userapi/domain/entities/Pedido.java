@@ -2,8 +2,12 @@ package com.ibmshop.userapi.domain.entities;
 
 import java.sql.Date;
 
+import com.ibmshop.userapi.domain.enums.StatusPedido;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -32,8 +36,9 @@ public class Pedido {
 	@Column(name = "data_criacao")
 	private Date dataCriacao;
 	
+	@Enumerated(EnumType.ORDINAL)
 	@Column(name = "status_pedido")
-	private Integer statusPedido;
+	private StatusPedido statusPedido;
 	
 	@Column(name = "numero_pedido")
 	private Integer numeroPedido;

@@ -1,13 +1,18 @@
 package com.ibmshop.userapi.domain.entities;
 
+import com.ibmshop.userapi.domain.enums.Pergunta;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -40,6 +45,9 @@ public class Endereco {
 	@Column(length = 45)
 	private String complemento;
 	
+	@NotNull(message ="")
+	private String cep; 
+	
 	@NotNull(message = "{}")
 	@Column(length = 45)
 	private String bairro;
@@ -56,6 +64,8 @@ public class Endereco {
 	@JoinColumn(name = "usuario_id")
 	private Usuario usuarioId;
 	
-	private byte enderecoPadrao;
+	
+	@Enumerated(EnumType.ORDINAL)
+	private Pergunta enderecoPadrao;
 	
 }
