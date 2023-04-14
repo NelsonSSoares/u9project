@@ -23,9 +23,13 @@ public class EnderecoDTO {
 	
 	private String complemento;
 	
+	private String cep;
+	
 	private String bairro;
 	
 	private String cidade;
+	
+	private String Estado;
 	
 	private Integer paisId;
 	

@@ -47,7 +47,6 @@ public class Usuario {
 	private String cpf;
 	
 	@Column(length = 20)
-	@NotEmpty(message = "{}")
 	private String telefone;	
 	
 	@Column(name = "data_criacao")

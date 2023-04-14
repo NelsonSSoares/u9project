@@ -26,6 +26,11 @@ import lombok.RequiredArgsConstructor;
 public class UsuarioController {
 	
 	
+	/*REFATORAR CLASSE*/
+	
+	
+	
+	
 	private final Usuarios usuarios;
 	
 	@GetMapping("{id}")
