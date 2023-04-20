@@ -1,6 +1,6 @@
 package com.ibmshop.userapi.domain.entities;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.hibernate.validator.constraints.br.CPF;
@@ -51,11 +51,11 @@ public class Usuario {
 	
 	@Column(name = "data_criacao")
 	@NotEmpty(message = "{}")
-	private Date dataCriacao;
+	private LocalDate dataCriacao;
 	
 	@Column(name = "data_modificacao")
 	@NotEmpty(message = "{}")
-	private Date dataModificacao;
+	private LocalDate dataModificacao;
 	
 	@NotEmpty(message = "{}")
 	@Enumerated(EnumType.ORDINAL)
@@ -63,6 +63,6 @@ public class Usuario {
 	
 	@OneToMany // (mappedBy = "endereco" ,fetch = FetchType.LAZY)
 	@JoinColumn(name = "endereco")
-	private List<Endereco> enderecoId;
+	private List<Endereco> endereco;
 
 }

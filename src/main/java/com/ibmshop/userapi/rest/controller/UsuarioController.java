@@ -16,6 +16,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.ibmshop.userapi.domain.entities.Usuario;
 import com.ibmshop.userapi.domain.repository.Usuarios;
+import com.ibmshop.userapi.rest.dto.UsuarioDTO;
+import com.ibmshop.userapi.service.UsuarioService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +34,7 @@ public class UsuarioController {
 	
 	
 	private final Usuarios usuarios;
+	private final UsuarioService service;
 	
 	@GetMapping("{id}")
 	public Usuario findById(@PathVariable Integer id) {
@@ -46,11 +49,19 @@ public class UsuarioController {
 				.orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND,"Usuario não encontrado")));
 	}
 	
+
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Usuario save(@RequestBody @Valid Usuario usuario) {
-		return usuarios.save(usuario);
+	public Integer salvar(@RequestBody UsuarioDTO dto) {
+		Usuario usuario = service.salvar(dto, null, null); //MUDAR PARAMETROS DO SERVICE E SERVICEIMPL
+		return usuario.getId();
 	}
+	
+//	@PostMapping
+//	@ResponseStatus(HttpStatus.CREATED)
+//	public Usuario salvar(@RequestBody @Valid Usuario usuario) {
+//		return usuarios.save(usuario);
+//	}
 	
 	@DeleteMapping("{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
