@@ -2,8 +2,6 @@ package com.ibmshop.userapi.rest.dto;
 
 import java.util.List;
 
-import com.ibmshop.userapi.domain.entities.Endereco;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,7 +17,7 @@ public class UsuarioDTO {
 	
 	private String cpf;
 	
-	private List<Endereco> endereco;
+	private List<EnderecoDTO> endereco;
 	
 	private String telefone;
 }

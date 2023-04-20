@@ -69,6 +69,7 @@ public class Endereco {
 	
 	
 	@Enumerated(EnumType.ORDINAL)
+	@Column(name ="endereco_padrao")
 	private Pergunta enderecoPadrao;
 	
 }

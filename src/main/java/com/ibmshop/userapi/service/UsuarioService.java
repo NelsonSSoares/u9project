@@ -6,5 +6,5 @@ import com.ibmshop.userapi.rest.dto.PaisDTO;
 import com.ibmshop.userapi.rest.dto.UsuarioDTO;
 
 public interface UsuarioService {
-	Usuario salvar (UsuarioDTO dto, EnderecoDTO endDto, PaisDTO paisDto);
+	Usuario salvar (UsuarioDTO dto);
 }

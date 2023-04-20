@@ -33,11 +33,11 @@ public class UsuarioServiceImpl implements UsuarioService{
 	
 	@Override
 	@Transactional
-	public Usuario salvar(UsuarioDTO userDto, EnderecoDTO endDto, PaisDTO paisDto) {
+	public Usuario salvar(UsuarioDTO userDto) {
 		
-		Usuario usuario = objectMapper.convertValue(paisDto, Usuario.class);
-		Endereco endereco = objectMapper.convertValue(endDto, Endereco.class);
-		Pais pais = objectMapper.convertValue(paisDto, Pais.class);
+		Usuario usuario = objectMapper.convertValue(userDto, Usuario.class);
+//		Endereco endereco = objectMapper.convertValue(endDto, Endereco.class);
+//		Pais pais = objectMapper.convertValue(paisDto, Pais.class);
 		
 		//--> USUARIO
 		usuario.setDataCriacao(LocalDate.now());
@@ -46,63 +46,27 @@ public class UsuarioServiceImpl implements UsuarioService{
 		
 		//---> ENDERECO
 		
-		if(endDto.getEnderecoPadrao().equals(Pergunta.NAO) ) {
-			endereco.setEnderecoPadrao(Pergunta.SIM);   
-		}
+		
+//		if(endDto.getEnderecoPadrao().equals(Pergunta.NAO) ) {
+//			endereco.setEnderecoPadrao(Pergunta.SIM);   
+//		}
 		
 		//--> FINALIZACAO METODO
 		
-	    paisRepository.save(pais);
-
-	    endereco.setPaisId(pais);
-
-	    enderecoRepository.save(endereco);
-
-	    List<Endereco> enderecos = new ArrayList<Endereco>();
-	    enderecos.add(endereco);
-	    usuario.setEndereco(enderecos);
+//	    paisRepository.save(pais);
+//
+//	    endereco.setPaisId(pais);
+//
+//	    enderecoRepository.save(endereco);
+//
+//	    List<Endereco> enderecos = new ArrayList<Endereco>();
+//	    enderecos.add(endereco);
+//	    usuario.setEndereco(enderecos);
 
 	    return usuarioRepository.save(usuario);
 
 		
-//		// --> USUARIO
-//		Usuario usuario = new Usuario();
-//		
-//		usuario.setNome(userDto.getNome());
-//		usuario.setSobrenome(userDto.getSobrenome());
-//		usuario.setCpf(userDto.getCpf());
-//		usuario.setTelefone(userDto.getTelefone());
-//		usuario.setDataCriacao(LocalDate.now());
-//		usuario.setDataModificacao(LocalDate.now());
-//		usuario.setAtivo(Pergunta.SIM);
-//		//--> ENDERECO
-//		Endereco endereco = new Endereco();
-//		endereco.setRua(endDto.getRua());
-//		endereco.setNumero(endDto.getNumero());
-//		endereco.setComplemento(endDto.getComplemento());
-//		endereco.setCep(endDto.getCep());
-//		endereco.setBairro(endDto.getBairro());
-//		endereco.setCidade(endDto.getCidade());
-//		endereco.setEstado(endDto.getEstado());
-//		if(endDto.getEnderecoPadrao().equals(Pergunta.NAO) ) {
-//			endereco.setEnderecoPadrao(Pergunta.SIM);   
-//		}
-//			
-//		//--> PAIS
-//		Pais pais = new Pais();
-//		pais.setCodigo(paisDto.getCodigo());
-//		pais.setNome(paisDto.getNome());
-//		
-//		//-----------------------------------
-//		endereco.setPaisId(pais);
-//		List<Endereco> enderecos = new ArrayList<Endereco>();
-//		enderecos.add(endereco);
-//		usuario.setEndereco(enderecos);
-//		
-//		
-//		
-//		
-//		return usuario;
+
 	} 
 	  
 }

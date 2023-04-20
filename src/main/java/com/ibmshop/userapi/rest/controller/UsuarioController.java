@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.ibmshop.userapi.domain.entities.Endereco;
 import com.ibmshop.userapi.domain.entities.Usuario;
 import com.ibmshop.userapi.domain.repository.Usuarios;
+import com.ibmshop.userapi.rest.dto.EnderecoDTO;
+import com.ibmshop.userapi.rest.dto.PaisDTO;
 import com.ibmshop.userapi.rest.dto.UsuarioDTO;
 import com.ibmshop.userapi.service.UsuarioService;
 
@@ -52,8 +55,13 @@ public class UsuarioController {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Integer salvar(@RequestBody UsuarioDTO dto) {
-		Usuario usuario = service.salvar(dto, null, null); //MUDAR PARAMETROS DO SERVICE E SERVICEIMPL
+	public Integer salvar(@RequestBody UsuarioDTO userDto) {
+		
+		System.out.println(userDto);
+
+		
+		Usuario usuario = service.salvar(userDto); //MUDAR PARAMETROS DO SERVICE E SERVICEIMPL
+		System.out.println(usuario);
 		return usuario.getId();
 	}
 	

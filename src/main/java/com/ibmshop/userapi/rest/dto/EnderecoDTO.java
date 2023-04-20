@@ -31,7 +31,7 @@ public class EnderecoDTO {
 	
 	private String Estado;
 	
-	private Integer paisId;
+	private PaisDTO pais;
 	
 	//colocar padrao SIM = 0 ou 1 primeiro parametro
 	@Enumerated(EnumType.ORDINAL)
