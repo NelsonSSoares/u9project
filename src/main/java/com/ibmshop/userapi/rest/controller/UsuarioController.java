@@ -33,6 +33,7 @@ public class UsuarioController {
 	
 	private final UsuarioService service;
 	
+		
 	@GetMapping
 	public List<Usuario> findAll(){
 		return service.buscarTodos();
