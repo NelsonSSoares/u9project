@@ -6,13 +6,14 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,41 +30,41 @@ public class Endereco {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
-	@NotNull(message = "{}")
+	@NotEmpty(message = "{}")
 	@Column(length = 45)
 	private String apelido;
 	
-	@NotNull(message = "{}")
+	@NotEmpty(message = "{}")
 	@Column(length = 45)
 	private String rua;
 	
-	@NotNull(message = "{}")
+	@NotEmpty(message = "{}")
 	@Column(length = 45)
 	private String numero;
 	
 	@Column(length = 45)
 	private String complemento;
 	
-	@NotNull(message ="")
+	@NotEmpty(message ="")
 	private String cep; 
 	
-	@NotNull(message = "{}")
+	@NotEmpty(message = "{}")
 	@Column(length = 45)
 	private String bairro;
 	
-	@NotNull(message = "{}")
+	@NotEmpty(message = "{}")
 	@Column(length = 45)
 	private String cidade;
 	
-	@NotNull(message = "{}")
+	@NotEmpty(message = "{}")
 	@Column(length = 45)
 	private String estado;
 	
 	@ManyToOne
 	@JoinColumn(name = "pais_id")
-	private Pais paisId;
+	private Pais pais;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Usuario.class)
 	@JoinColumn(name = "usuario_id")
 	private Usuario usuarioId;
 	

@@ -1,5 +1,6 @@
 package com.ibmshop.userapi.rest.dto;
 
+import com.ibmshop.userapi.domain.entities.Pais;
 import com.ibmshop.userapi.domain.enums.Pergunta;
 
 import jakarta.persistence.EnumType;
