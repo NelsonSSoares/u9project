@@ -84,7 +84,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 		return usuarioRepository.findAll();
 		
 	}
-
+	
 	@Override
 	public Usuario buscarPorId(Integer id) {
 		return usuarioRepository.findById(id)
@@ -94,6 +94,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 	
 	//METODO SÓ TRAZ DADOS DO USUARIO, TALVEZ PQ AINDA NÃO CONSIGO LOCALIZAR
 	//A CHAVE ESTRANGEIRA DE USUARIO EM ENDERECO.
+	@Transactional
 	@Override 
 	public void atualizarUsuario(Integer id, UsuarioDTO userDto) {
 		
