@@ -29,8 +29,10 @@
 //						)
 //				.httpBasic().and().build();
 //	}
-//	
-//	
-//	
+//	@Override
+//	public void configure(WebSecurity web) throws{
+//		web.ignoring().requestMatchers("/v2/api-docs","configuiration/ui", "swagger-resources/**",
+//		"configuration-security","/swagger-ui.html","webjars/**");
+//  }	
 //	
 //}
