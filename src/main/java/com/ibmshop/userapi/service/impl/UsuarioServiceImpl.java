@@ -4,12 +4,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ibmshop.userapi.constraints.SomenteUserAtivo;
 import com.ibmshop.userapi.domain.dto.EnderecoDTO;
 import com.ibmshop.userapi.domain.dto.UsuarioDTO;
 import com.ibmshop.userapi.domain.entities.Endereco;
@@ -37,19 +38,13 @@ public class UsuarioServiceImpl implements UsuarioService{
 	@Transactional
 	public ResponseEntity<Usuario> salvar(UsuarioDTO userDto) {
 		
-		System.out.println("USERDTO PARAM: " + userDto);
-		
 		List<Endereco> enderecos = new ArrayList<Endereco>();
 		
 		for (EnderecoDTO enderecoDto : userDto.getEndereco()) {
-			
-			System.out.println("USERDTO.GETEND: " +userDto.getEndereco());
+	
 			Endereco endereco = objectMapper.convertValue(enderecoDto, Endereco.class);
-			System.out.println("ENDERECO MAPPER: " +endereco);
 			Pais pais = objectMapper.convertValue(endereco.getPais(), Pais.class); 
-			System.out.println("PAIS MAPPER: " +pais);
 			paisRepository.save(pais);
-			System.out.println(pais);
 			endereco.setPais(pais);
 			
 			if(endereco.getEnderecoPadrao().equals(Pergunta.NAO) ) {
@@ -66,16 +61,10 @@ public class UsuarioServiceImpl implements UsuarioService{
 		usuario.setDataCriacao(LocalDate.now());
 		usuario.setDataModificacao(LocalDate.now());
 		usuario.setAtivo(Pergunta.SIM);
-		//CRIAR METODO POSTERIORMENTE PARA VERIFICAR SE A RESPOSTA É NEGATIVA NA HORA DA CRIACAO DE USER
-//		if(usuario.getAtivo().equals(Pergunta.NAO)) {
-//			usuario.setAtivo(Pergunta.SIM);
-//		}
-		System.out.println(usuario.getEndereco());
+
 		System.out.println(usuario);
-		
 		usuarioRepository.save(usuario);
 		
-
 	    return ResponseEntity.ok(usuario);		
 
 	}
@@ -89,9 +78,14 @@ public class UsuarioServiceImpl implements UsuarioService{
 			return ResponseEntity.notFound().build();
 		}
 		
-		List<UsuarioDTO> usuariosDto = usuarios.stream()
-				.map(usuario -> objectMapper.convertValue(usuario, UsuarioDTO.class))
-				.collect(Collectors.toList());
+		List<Usuario> usuariosAtivos = new SomenteUserAtivo().usuariosAtivosList(usuarios);
+		
+	    List<UsuarioDTO> usuariosDto = new ArrayList<>();
+	    
+	    for (Usuario usuario : usuariosAtivos) {
+	        UsuarioDTO usuarioDto = objectMapper.convertValue(usuario, UsuarioDTO.class);
+	        usuariosDto.add(usuarioDto);
+	    }
 		
 		return ResponseEntity.ok(usuariosDto);
 		
@@ -107,6 +101,10 @@ public class UsuarioServiceImpl implements UsuarioService{
 		}
 		
 		Usuario usuario = usuarioOpt.get();
+		
+		if(usuario.getAtivo().equals(Pergunta.NAO)) {
+			return ResponseEntity.notFound().build();
+		}
 		
 		return ResponseEntity.ok(usuario);
 	}
@@ -137,26 +135,35 @@ public class UsuarioServiceImpl implements UsuarioService{
 	@Override
 	public ResponseEntity<Usuario> deletarUsuario(Integer id) {
 		
-		Optional<Usuario> usuario = usuarioRepository.findById(id);
+		Optional<Usuario> usuarioOpt = usuarioRepository.findById(id);
 		
-		if(usuario.isEmpty()) {
+		if(usuarioOpt.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}
 		
+		Usuario usuario = usuarioOpt.get();
+		if(usuario.getAtivo().equals(Pergunta.NAO)) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		}
+		usuario.setAtivo(Pergunta.NAO);
+		usuarioRepository.save(usuario);
 		return ResponseEntity.noContent().build();
+		
 	}
 	
 	
 	//METODO FALHANDO, NÃO TRAZ OS NOMES PASSADOS POR PARAMETRO, APARECEM SOMENTE USUARIO DE EXEMPLO EX: nome = Nome
 	@Override
 	public ResponseEntity<List<Usuario>> encontrarPorNome(String nome) {
-		List<Usuario> usuario = usuarioRepository.findByNome(nome);
+		List<Usuario> usuarios = usuarioRepository.findByNome(nome);
 		
-		if(usuario.isEmpty()) {
+		if(usuarios.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}
 		
-		return ResponseEntity.ok(usuario);
+		List<Usuario> usuariosAtivos = new SomenteUserAtivo().usuariosAtivosList(usuarios);
+		
+		return ResponseEntity.ok(usuariosAtivos);
 		
 	}
 
@@ -167,6 +174,8 @@ public class UsuarioServiceImpl implements UsuarioService{
 		Optional<Usuario> usuarioOpt = usuarioRepository.findByCpf(cpf);
 		
 		if(usuarioOpt.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}else if(usuarioOpt.get().getAtivo().equals(Pergunta.NAO)) {
 			return ResponseEntity.notFound().build();
 		}
 		Usuario usuario = usuarioOpt.get();
