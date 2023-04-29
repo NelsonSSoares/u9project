@@ -125,6 +125,18 @@ public class UsuarioController {
 	public ResponseEntity<Usuario> update(@PathVariable Integer id, @RequestBody @Valid UsuarioDTO userDto) {
 		return service.atualizarUsuario(id, userDto);
 	}
+	@Operation(summary = "Metodo para reativar usuário", method = "PUT")	
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Usuário reativado com sucesso!!"),
+			@ApiResponse(responseCode = "401", description = "Usuário não autenticado!"),
+			@ApiResponse(responseCode = "409", description = "Usuário já ativo!"),
+			@ApiResponse(responseCode = "500", description = "Erro ao atualizar usuário!"),
+	})
+	@PutMapping("enable/{id}")
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<Usuario> reactivateUser(@PathVariable Integer id){
+		return service.reativarUsuario(id);
+	}
 	
 		
 }

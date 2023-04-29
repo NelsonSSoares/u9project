@@ -184,6 +184,23 @@ public class UsuarioServiceImpl implements UsuarioService{
 		
 	}
 
+	@Override
+	public ResponseEntity<Usuario> reativarUsuario(Integer id) {
+		Optional<Usuario> usuario = usuarioRepository.findById(id);
+		
+		if(usuario.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}else if(usuario.get().getAtivo().equals(Pergunta.SIM)) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		}
+		
+		Usuario usuarioAtivo = usuario.get();
+		usuarioAtivo.setAtivo(Pergunta.SIM);
+		usuarioRepository.save(usuarioAtivo);
+		
+		return ResponseEntity.ok(usuarioAtivo);
+	}
+
 
 
 

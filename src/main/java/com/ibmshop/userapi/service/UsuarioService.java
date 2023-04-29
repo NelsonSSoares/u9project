@@ -21,4 +21,6 @@ public interface UsuarioService {
 	ResponseEntity<List<Usuario>> encontrarPorNome(String nome);
 	
 	ResponseEntity<Usuario> encontrarPorCpf(String cpf);
+	
+	ResponseEntity<Usuario> reativarUsuario(Integer id);
 }
