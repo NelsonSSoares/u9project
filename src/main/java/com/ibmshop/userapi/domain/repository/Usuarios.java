@@ -1,6 +1,7 @@
 package com.ibmshop.userapi.domain.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,7 +16,7 @@ public interface Usuarios extends JpaRepository<Usuario, Integer> {
 	
 	
 	@Query(value = "select * from usuario u where u.cpf = :cpf", nativeQuery = true)
-	Usuario findByCpf(@Param("cpf") String cpf);
+	Optional<Usuario> findByCpf(@Param("cpf") String cpf);
 	
 	@Query(value = "select * from usuario u where u.nome like '%nome%'  ", nativeQuery = true)
 	List<Usuario> findByNome(@Param("nome") String nome);

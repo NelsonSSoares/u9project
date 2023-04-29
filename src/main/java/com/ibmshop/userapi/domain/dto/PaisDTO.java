@@ -1,4 +1,4 @@
-package com.ibmshop.userapi.rest.dto;
+package com.ibmshop.userapi.domain.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

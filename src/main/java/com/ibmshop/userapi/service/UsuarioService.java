@@ -2,21 +2,23 @@ package com.ibmshop.userapi.service;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
+
+import com.ibmshop.userapi.domain.dto.UsuarioDTO;
 import com.ibmshop.userapi.domain.entities.Usuario;
-import com.ibmshop.userapi.rest.dto.UsuarioDTO;
 
 public interface UsuarioService {
-	Usuario salvar (UsuarioDTO dto);
+	ResponseEntity<Usuario> salvar (UsuarioDTO dto);
 	
-	List<Usuario> buscarTodos();
+	ResponseEntity<List<UsuarioDTO>> buscarTodos();
 	
-	Usuario buscarPorId(Integer id);
+	ResponseEntity<Usuario> buscarPorId(Integer id);
 	
-	void atualizarUsuario(Integer id, UsuarioDTO userDTO);
+	ResponseEntity<Usuario> atualizarUsuario(Integer id, UsuarioDTO userDTO);
 	
-	void deletarUsuario(Integer id);
+	ResponseEntity<Usuario> deletarUsuario(Integer id);
 	
-	List<Usuario> encontrarPorNome(String nome);
+	ResponseEntity<List<Usuario>> encontrarPorNome(String nome);
 	
-	Usuario encontrarPorCpf(String cpf);
+	ResponseEntity<Usuario> encontrarPorCpf(String cpf);
 }

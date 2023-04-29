@@ -3,12 +3,15 @@
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
-import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ibmshop.userapi.domain.dto.EnderecoDTO;
+import com.ibmshop.userapi.domain.dto.UsuarioDTO;
 import com.ibmshop.userapi.domain.entities.Endereco;
 import com.ibmshop.userapi.domain.entities.Pais;
 import com.ibmshop.userapi.domain.entities.Usuario;
@@ -16,8 +19,6 @@ import com.ibmshop.userapi.domain.enums.Pergunta;
 import com.ibmshop.userapi.domain.repository.Enderecos;
 import com.ibmshop.userapi.domain.repository.Paises;
 import com.ibmshop.userapi.domain.repository.Usuarios;
-import com.ibmshop.userapi.rest.dto.EnderecoDTO;
-import com.ibmshop.userapi.rest.dto.UsuarioDTO;
 import com.ibmshop.userapi.service.UsuarioService;
 
 import jakarta.transaction.Transactional;
@@ -34,7 +35,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 	
 	@Override
 	@Transactional
-	public Usuario salvar(UsuarioDTO userDto) {
+	public ResponseEntity<Usuario> salvar(UsuarioDTO userDto) {
 		
 		System.out.println("USERDTO PARAM: " + userDto);
 		
@@ -75,71 +76,102 @@ public class UsuarioServiceImpl implements UsuarioService{
 		usuarioRepository.save(usuario);
 		
 
-	    return usuario;		
+	    return ResponseEntity.ok(usuario);		
 
 	}
 
 	@Override
-	public List<Usuario> buscarTodos() {
-		return usuarioRepository.findAll();
+	public ResponseEntity<List<UsuarioDTO>> buscarTodos() {
+		
+		List<Usuario> usuarios = usuarioRepository.findAll();
+		
+		if(usuarios.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		List<UsuarioDTO> usuariosDto = usuarios.stream()
+				.map(usuario -> objectMapper.convertValue(usuario, UsuarioDTO.class))
+				.collect(Collectors.toList());
+		
+		return ResponseEntity.ok(usuariosDto);
 		
 	}
 	
 	@Override
-	public Usuario buscarPorId(Integer id) {
-		return usuarioRepository.findById(id)
-				.orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario não encontrado"));
+	public ResponseEntity<Usuario> buscarPorId(Integer id) {
 		
+		Optional<Usuario> usuarioOpt = usuarioRepository.findById(id);
+		
+		if(usuarioOpt.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		Usuario usuario = usuarioOpt.get();
+		
+		return ResponseEntity.ok(usuario);
 	}
 	
 	//METODO SÓ TRAZ DADOS DO USUARIO, TALVEZ PQ AINDA NÃO CONSIGO LOCALIZAR
 	//A CHAVE ESTRANGEIRA DE USUARIO EM ENDERECO.
 	@Transactional
 	@Override 
-	public void atualizarUsuario(Integer id, UsuarioDTO userDto) {
+	public ResponseEntity<Usuario> atualizarUsuario(Integer id, UsuarioDTO userDto) {
 		
-		Usuario usuario = objectMapper.convertValue(userDto, Usuario.class);
-		System.out.println(usuario);
-		 usuarioRepository.findById(id)
-				.map(usuarioExistente -> {
-					usuario.setId(usuarioExistente.getId());
-					usuario.setDataCriacao(usuarioExistente.getDataCriacao());
-					usuario.setEndereco(usuarioExistente.getEndereco());
-					usuario.setDataModificacao(LocalDate.now());
-					usuario.setAtivo(Pergunta.SIM);
-					System.out.println(usuario);
-					usuarioRepository.save(usuario);
-					return usuarioExistente;
-				}).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario Não encontrado"));
+		Optional<Usuario> usuarioOpt = usuarioRepository.findById(id);
+		
+		if(usuarioOpt.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		Usuario usuario = usuarioOpt.get();
+		usuario = objectMapper.convertValue(userDto, Usuario.class);
+		usuario.setDataCriacao(usuarioOpt.get().getDataCriacao());
+		usuario.setId(usuarioOpt.get().getId());
+		usuario.setAtivo(Pergunta.SIM);
+		usuario.setDataModificacao(LocalDate.now());
+		
+		usuarioRepository.save(usuario);
+		 return ResponseEntity.ok(usuario);
 	}
 
 	@Override
-	public void deletarUsuario(Integer id) {
-		usuarioRepository.findById(id)
-		.map(usuario -> {
-			usuarioRepository.delete(usuario);
-			return usuario;
-		}).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario não encontrado"));
+	public ResponseEntity<Usuario> deletarUsuario(Integer id) {
 		
+		Optional<Usuario> usuario = usuarioRepository.findById(id);
+		
+		if(usuario.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		return ResponseEntity.noContent().build();
 	}
 	
 	
 	//METODO FALHANDO, NÃO TRAZ OS NOMES PASSADOS POR PARAMETRO, APARECEM SOMENTE USUARIO DE EXEMPLO EX: nome = Nome
 	@Override
-	public List<Usuario> encontrarPorNome(String nome) {
+	public ResponseEntity<List<Usuario>> encontrarPorNome(String nome) {
 		List<Usuario> usuario = usuarioRepository.findByNome(nome);
-//		if(usuario.isEmpty()) {
-//			return (List<Usuario>) ResponseEntity.notFound().build();
-//		}
-		return usuario;
+		
+		if(usuario.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		return ResponseEntity.ok(usuario);
 		
 	}
 
 	//PASSAR CPF COM PONTUAÇÃO
 	@Override
-	public Usuario encontrarPorCpf(String cpf) {
+	public ResponseEntity<Usuario> encontrarPorCpf(String cpf) {
 		
-		return usuarioRepository.findByCpf(cpf);
+		Optional<Usuario> usuarioOpt = usuarioRepository.findByCpf(cpf);
+		
+		if(usuarioOpt.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+		Usuario usuario = usuarioOpt.get();
+		
+		return ResponseEntity.ok(usuario);
 		
 	}
 

@@ -4,6 +4,7 @@ package com.ibmshop.userapi.rest.controller;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ibmshop.userapi.domain.dto.UsuarioDTO;
 import com.ibmshop.userapi.domain.entities.Usuario;
-import com.ibmshop.userapi.rest.dto.UsuarioDTO;
 import com.ibmshop.userapi.service.UsuarioService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -45,7 +46,7 @@ public class UsuarioController {
 			@ApiResponse(responseCode = "500", description = "Erro ao buscar usuário!")
 	})
 	@GetMapping
-	public List<Usuario> findAll(){
+	public ResponseEntity<List<UsuarioDTO>> findAll(){
 		return service.buscarTodos();
 	}
 	@Operation(summary = "Busca usuario cadastrado por ID", method = "GET")	
@@ -55,7 +56,7 @@ public class UsuarioController {
 			@ApiResponse(responseCode = "500", description = "Erro ao buscar usuário!")
 	})
 	@GetMapping("{id}")
-	public Usuario findById(@PathVariable Integer id) {
+	public ResponseEntity<Usuario> findById(@PathVariable Integer id) {
 		return service
 				.buscarPorId(id);
 	}
@@ -68,7 +69,7 @@ public class UsuarioController {
 			@ApiResponse(responseCode = "500", description = "Erro ao buscar usuário!")
 	})
 	@GetMapping("/name/{nome}")
-	public List<Usuario> findByName(@PathVariable String nome) {
+	public ResponseEntity<List<Usuario>> findByName(@PathVariable String nome) {
 		return service.encontrarPorNome(nome);
 				
 	}
@@ -80,7 +81,7 @@ public class UsuarioController {
 			@ApiResponse(responseCode = "500", description = "Erro ao buscar usuário!")
 	})
 	@GetMapping("/cpf/{cpf}")
-	public Usuario findByCpf(@PathVariable String cpf) {
+	public ResponseEntity<Usuario> findByCpf(@PathVariable String cpf) {
 		return service.encontrarPorCpf(cpf);
 	}
 	
@@ -94,9 +95,8 @@ public class UsuarioController {
 	})
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Usuario save(@RequestBody @Valid UsuarioDTO userDto) {
-		Usuario usuario = service.salvar(userDto); 
-		return usuario;
+	public ResponseEntity<Usuario> save(@RequestBody @Valid UsuarioDTO userDto) { 
+		return service.salvar(userDto);
 	}
 	
 	@Operation(summary = "Metodo para excluir usuário existente", method = "DELETE")	
@@ -107,8 +107,8 @@ public class UsuarioController {
 	})
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void delete(@PathVariable Integer id) {
-		service.deletarUsuario(id);
+	public ResponseEntity<Usuario> delete(@PathVariable Integer id) {
+		return service.deletarUsuario(id);
 		
 	}
 	
@@ -122,9 +122,8 @@ public class UsuarioController {
 	})
 	@PutMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void update(@PathVariable Integer id, @RequestBody @Valid UsuarioDTO userDto) {
-		service.atualizarUsuario(id, userDto);
-		//.orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario Não encontrado"));
+	public ResponseEntity<Usuario> update(@PathVariable Integer id, @RequestBody @Valid UsuarioDTO userDto) {
+		return service.atualizarUsuario(id, userDto);
 	}
 	
 		
