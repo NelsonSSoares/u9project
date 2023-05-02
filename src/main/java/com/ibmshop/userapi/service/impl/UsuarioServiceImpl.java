@@ -36,7 +36,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 	
 	@Override
 	@Transactional
-	public ResponseEntity<Usuario> salvar(UsuarioDTO userDto) {
+	public ResponseEntity<Usuario> salvar(UsuarioDTO userDto){
 		
 		List<Endereco> enderecos = new ArrayList<Endereco>();
 		
@@ -78,7 +78,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 			return ResponseEntity.notFound().build();
 		}
 		
-		List<Usuario> usuariosAtivos = new SomenteUserAtivo().usuariosAtivosList(usuarios);
+		List<Usuario> usuariosAtivos = SomenteUserAtivo.usuariosAtivosList(usuarios);
 		
 	    List<UsuarioDTO> usuariosDto = new ArrayList<>();
 	    
