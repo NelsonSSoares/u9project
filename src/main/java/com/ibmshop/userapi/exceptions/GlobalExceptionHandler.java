@@ -61,6 +61,20 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 HttpStatus.INTERNAL_SERVER_ERROR,
                 request);
     }
+    
+    @ExceptionHandler(NullPointerException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Object> handleNullPointerException(
+            Exception exception,
+            WebRequest request) {
+        final String errorMessage = "Invalid Args or Params";
+        log.error(errorMessage, exception);
+        return buildErrorResponse(
+                exception,
+                errorMessage,
+                HttpStatus.BAD_REQUEST,
+                request);
+    }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     @ResponseStatus(HttpStatus.CONFLICT)

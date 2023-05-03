@@ -41,14 +41,16 @@ public class UsuarioServiceImpl implements UsuarioService{
 		List<Endereco> enderecos = new ArrayList<Endereco>();
 		
 		for (EnderecoDTO enderecoDto : userDto.getEndereco()) {
-	
+
 			Endereco endereco = objectMapper.convertValue(enderecoDto, Endereco.class);
 			Pais pais = objectMapper.convertValue(endereco.getPais(), Pais.class); 
 			paisRepository.save(pais);
 			endereco.setPais(pais);
 			
-			if(endereco.getEnderecoPadrao().equals(Pergunta.NAO) ) {
+			if(endereco.getEnderecoPadrao().equals(Pergunta.NAO)) {
 				endereco.setEnderecoPadrao(Pergunta.SIM);   
+			}else if(endereco.getEnderecoPadrao().equals(null)) {
+				endereco.setEnderecoPadrao(Pergunta.SIM);
 			}
 			enderecos.add(endereco);
 		}
@@ -122,6 +124,9 @@ public class UsuarioServiceImpl implements UsuarioService{
 		}
 		
 		Usuario usuario = usuarioOpt.get();
+		
+		System.out.println(usuario);
+		
 		usuario = objectMapper.convertValue(userDto, Usuario.class);
 		usuario.setDataCriacao(usuarioOpt.get().getDataCriacao());
 		usuario.setId(usuarioOpt.get().getId());
@@ -161,7 +166,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 			return ResponseEntity.notFound().build();
 		}
 		
-		List<Usuario> usuariosAtivos = new SomenteUserAtivo().usuariosAtivosList(usuarios);
+		List<Usuario> usuariosAtivos = SomenteUserAtivo.usuariosAtivosList(usuarios);
 		
 		return ResponseEntity.ok(usuariosAtivos);
 		
