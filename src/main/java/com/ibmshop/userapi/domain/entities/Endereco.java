@@ -30,33 +30,33 @@ public class Endereco {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
-	@NotEmpty(message = "{}")
+	@NotEmpty(message = "${}")
 	@Column(length = 45)
 	private String apelido;
 	
-	@NotEmpty(message = "{}")
+	@NotEmpty(message = "${}")
 	@Column(length = 45)
 	private String rua;
 	
-	@NotEmpty(message = "{}")
+	@NotEmpty(message = "${}")
 	@Column(length = 45)
 	private String numero;
 	
 	@Column(length = 45)
 	private String complemento;
 	
-	@NotEmpty(message ="")
+	@NotEmpty(message ="${}")
 	private String cep; 
 	
-	@NotEmpty(message = "{}")
+	@NotEmpty(message = "${}")
 	@Column(length = 45)
 	private String bairro;
 	
-	@NotEmpty(message = "{}")
+	@NotEmpty(message = "${}")
 	@Column(length = 45)
 	private String cidade;
 	
-	@NotEmpty(message = "{}")
+	@NotEmpty(message = "${}")
 	@Column(length = 45)
 	private String estado;
 	

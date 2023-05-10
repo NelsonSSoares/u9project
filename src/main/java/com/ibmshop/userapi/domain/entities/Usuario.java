@@ -37,16 +37,16 @@ import lombok.NoArgsConstructor;
 		private Integer id;
 		
 		@Column(length = 255)
-		@NotEmpty(message = "{campo.nome.obrigatorio}")
+		@NotEmpty(message = "${campo.nome.obrigatorio}")
 		private String nome;
 		
 		@Column(length = 255)
-		@NotEmpty(message = "{campo.nome.obrigatorio}")
+		@NotEmpty(message = "${campo.nome.obrigatorio}")
 		private String sobrenome;
 		
 		@Column(length = 14)
-		@NotEmpty(message = "{}")
-		@CPF(message = "{campo.cpf.obrigatorio}")
+		@NotEmpty(message = "${}")
+		@CPF(message = "${campo.cpf.obrigatorio}")
 		private String cpf;
 		
 		//@Pattern(regexp = "(/^(?:(?:\\+|00)?(55)\\s?)?(?:\\(?([1-9][0-9])\\)?\\s?)?(?:((?:9\\d|[2-9])\\d{3})\\-?(\\d{4}))$/)" ,message = "{campo.telefone.válido}") 
@@ -54,16 +54,16 @@ import lombok.NoArgsConstructor;
 		private String telefone;	
 		
 		@Column(name = "data_criacao")
-		@NotNull(message = "{}")
+		@NotNull(message = "${}")
 		//@NotBlank
 		private LocalDate dataCriacao;
 		
 		@Column(name = "data_modificacao")
-		@NotNull(message = "{}")
+		@NotNull(message = "${}")
 		@DateTimeFormat(pattern = "YYYY-MM-DD")
 		private LocalDate dataModificacao;
 		
-		@NotNull(message = "{}")
+		@NotNull(message = "${}")
 		@Enumerated(EnumType.ORDINAL)
 		private Pergunta ativo;
 		
