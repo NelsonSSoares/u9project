@@ -7,5 +7,6 @@ import com.ibmshop.userapi.domain.entities.Endereco;
 
 @Repository
 public interface Enderecos extends JpaRepository<Endereco, Integer> {
-
+	
+	
 }
