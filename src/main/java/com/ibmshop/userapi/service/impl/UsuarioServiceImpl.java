@@ -54,16 +54,16 @@ public class UsuarioServiceImpl implements UsuarioService{
 			}
 			enderecos.add(endereco);
 		}
-		
-		enderecoRepository.saveAll(enderecos);
-		
+			
 		Usuario usuario = objectMapper.convertValue(userDto, Usuario.class);	
 		
 		usuario.setEndereco(enderecos);
 		usuario.setDataCriacao(LocalDate.now());
 		usuario.setDataModificacao(LocalDate.now());
 		usuario.setAtivo(Pergunta.SIM);
-
+		
+		enderecoRepository.saveAll(enderecos);
+		
 		System.out.println(usuario);
 		usuarioRepository.save(usuario);
 		

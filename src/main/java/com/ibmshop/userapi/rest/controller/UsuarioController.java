@@ -56,7 +56,7 @@ public class UsuarioController {
 			@ApiResponse(responseCode = "500", description = "Erro ao buscar usuário!")
 	})
 	@GetMapping("{id}")
-	public ResponseEntity<Usuario> findById(@PathVariable Integer id) {
+	public ResponseEntity<Usuario> findById(@PathVariable("id") Integer id) {
 		return service
 				.buscarPorId(id);
 	}
@@ -69,7 +69,7 @@ public class UsuarioController {
 			@ApiResponse(responseCode = "500", description = "Erro ao buscar usuário!")
 	})
 	@GetMapping("/name/{nome}")
-	public ResponseEntity<List<Usuario>> findByName(@PathVariable String nome) {
+	public ResponseEntity<List<Usuario>> findByName(@PathVariable("nome") String nome) {
 		return service.encontrarPorNome(nome);
 				
 	}
@@ -81,7 +81,7 @@ public class UsuarioController {
 			@ApiResponse(responseCode = "500", description = "Erro ao buscar usuário!")
 	})
 	@GetMapping("/cpf/{cpf}")
-	public ResponseEntity<Usuario> findByCpf(@PathVariable String cpf) {
+	public ResponseEntity<Usuario> findByCpf(@PathVariable("cpf") String cpf) {
 		return service.encontrarPorCpf(cpf);
 	}
 	
@@ -107,7 +107,7 @@ public class UsuarioController {
 	})
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public ResponseEntity<Usuario> delete(@PathVariable Integer id) {
+	public ResponseEntity<Usuario> delete(@PathVariable("id") Integer id) {
 		return service.deletarUsuario(id);
 		
 	}
@@ -134,7 +134,7 @@ public class UsuarioController {
 	})
 	@PutMapping("enable/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Usuario> reactivateUser(@PathVariable Integer id){
+	public ResponseEntity<Usuario> reactivateUser(@PathVariable("id") Integer id){
 		return service.reativarUsuario(id);
 	}
 	
