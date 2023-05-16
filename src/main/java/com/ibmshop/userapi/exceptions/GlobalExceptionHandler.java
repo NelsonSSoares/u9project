@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.hibernate.ObjectNotFoundException;
+import org.hibernate.PropertyNotFoundException;
 import org.springframework.context.MessageSource;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -24,6 +25,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.google.common.net.HttpHeaders;
 
+import jakarta.transaction.TransactionalException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import lombok.RequiredArgsConstructor;
@@ -36,47 +38,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 	private boolean printStackTrace;
 
-	private final MessageSource msgSource;
-
-	@Override
-	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
-			org.springframework.http.HttpHeaders headers, HttpStatusCode status, WebRequest request) {
-
-		List<Problem.Campo> campos = new ArrayList<>();
-
-		for (ObjectError error : ex.getBindingResult().getAllErrors()) {
-			String nome = ((FieldError) error).getField();
-			String mensagem = msgSource.getMessage(error, LocaleContextHolder.getLocale());
-			campos.add(new Problem.Campo(nome, mensagem));
-		}
-
-		Problem problem = new Problem();
-		problem.setStatus(status.value());
-		problem.setDatahora(LocalDateTime.now());
-		problem.setTitulo("Não foi possível cadastrar o usuário. O campo é obrigatório. Verifique e tente novamente.");
-		problem.setCampos(campos);
-		return handleExceptionInternal(ex, problem, headers, status, request);
-	}
-
-	protected ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException ex,
-			org.springframework.http.HttpHeaders headers, HttpStatusCode status, WebRequest request) {
-
-		List<Problem.Campo> campos = new ArrayList<>();
-
-		for (ConstraintViolation<?> error : ex.getConstraintViolations()) {
-			String nome = ((FieldError) error).getField();
-			String mensagem = msgSource.getMessage((MessageSourceResolvable) error, LocaleContextHolder.getLocale());
-			campos.add(new Problem.Campo(nome, mensagem));
-		}
-
-		Problem problem = new Problem();
-		problem.setStatus(status.value());
-		problem.setDatahora(LocalDateTime.now());
-		problem.setTitulo("Não foi possível cadastrar o usuário. O campo é obrigatório. Verifique e tente novamente.");
-		problem.setCampos(campos);
-		return handleExceptionInternal(ex, problem, headers, status, request);
-	}
-
+	//private final MessageSource msgSource;
+	
 	
 	@ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(
@@ -85,9 +48,29 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		ErrorResponse errorResponse = new ErrorResponse(HttpStatus.UNPROCESSABLE_ENTITY.value(),
 				"Validation error. Check 'errors' field for details.");
 		for (FieldError fieldError : methodArgumentNotValidException.getBindingResult().getFieldErrors()) {
-			errorResponse.addValidationError(fieldError.getField(), fieldError.getDefaultMessage());
+			errorResponse.addValidationError(fieldError.getField(), "Verifique se o campo foi preenchido corretamente!");
 		}
 		return ResponseEntity.unprocessableEntity().body(errorResponse);
+	}
+	//PropertyNotFoundException
+	@ExceptionHandler(PropertyNotFoundException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public ResponseEntity<ErrorResponse> handleIPropertyException(PropertyNotFoundException ex,
+			WebRequest request) {
+		ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(),
+				"Validation error. Check 'errors' field for details.");
+		errorResponse.addValidationError("argument", ex.getMessage());
+		return ResponseEntity.badRequest().body(errorResponse);
+	}
+	
+	@ExceptionHandler(TransactionalException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public ResponseEntity<ErrorResponse> handleITransactionException(TransactionalException ex,
+			WebRequest request) {
+		ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(),
+				"Validation error. Check 'errors' field for details.");
+		errorResponse.addValidationError("argument", ex.getMessage());
+		return ResponseEntity.badRequest().body(errorResponse);
 	}
 
 	@ExceptionHandler(IllegalArgumentException.class)
@@ -100,13 +83,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		return ResponseEntity.badRequest().body(errorResponse);
 	}
 
-	@ExceptionHandler(Exception.class)
-	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	public ResponseEntity<Object> handleAllUncaughtException(Exception exception, WebRequest request) {
-		final String errorMessage = "Unknown error occurred";
-		log.error(errorMessage, exception);
-		return buildErrorResponse(exception, errorMessage, HttpStatus.INTERNAL_SERVER_ERROR, request);
-	}
+//	@ExceptionHandler(Exception.class)
+//	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+//	public ResponseEntity<Object> handleAllUncaughtException(Exception exception, WebRequest request) {
+//		final String errorMessage = "Unknown error occurred";
+//		log.error(errorMessage, exception);
+//		return buildErrorResponse(exception, errorMessage, HttpStatus.INTERNAL_SERVER_ERROR, request);
+//	}
 
 	@ExceptionHandler(NullPointerException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -129,7 +112,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	@ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
 	public ResponseEntity<Object> handleConstraintViolationException(
 			ConstraintViolationException constraintViolationException, WebRequest request) {
-		log.error("Failed to validate element", constraintViolationException);
+		log.error("Failed to validate element", constraintViolationException.getConstraintViolations());
 		return buildErrorResponse(constraintViolationException, HttpStatus.UNPROCESSABLE_ENTITY, request);
 	}
 
@@ -219,3 +202,43 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 ////  ErrorResponse errorResponse = new ErrorResponse(status, "Username or password are invalid");
 ////  response.getWriter().append(errorResponse.toJson());
 ////}
+//@Override
+//protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+//		org.springframework.http.HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+//
+//	List<Problem.Campo> campos = new ArrayList<>();
+//
+//	for (ObjectError error : ex.getBindingResult().getAllErrors()) {
+//		String nome = ((FieldError) error).getField();
+//		String mensagem = msgSource.getMessage(error, LocaleContextHolder.getLocale());
+//		campos.add(new Problem.Campo(nome, mensagem));
+//	}
+//
+//	Problem problem = new Problem();
+//	problem.setStatus(status.value());
+//	problem.setDatahora(LocalDateTime.now());
+//	problem.setTitulo("Não foi possível cadastrar o usuário. O campo é obrigatório. Verifique e tente novamente.");
+//	problem.setCampos(campos);
+//	return handleExceptionInternal(ex, problem, headers, status, request);
+//}
+//
+//
+//
+//protected ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException ex,
+//		org.springframework.http.HttpHeaders headers, HttpStatusCode status, WebRequest request, Problem... problem2) {
+//
+//	List<Problem.Campo> campos = new ArrayList<>();
+//
+//	for (ConstraintViolation<?> error : ex.getConstraintViolations()) {
+//		String nome = ((FieldError) error).getField();
+//		String mensagem = msgSource.getMessage((MessageSourceResolvable) error, LocaleContextHolder.getLocale());
+//		campos.add(new Problem.Campo(nome, mensagem));
+//	}
+//
+//	Problem problem = new Problem();
+//	problem.setStatus(status.value());
+//	problem.setDatahora(LocalDateTime.now());
+//	problem.setTitulo("Não foi possível cadastrar o usuário. O campo é obrigatório. Verifique e tente novamente.");
+//	problem.setCampos(campos);
+//	return handleExceptionInternal(ex, problem, headers, status, request);
+//}
