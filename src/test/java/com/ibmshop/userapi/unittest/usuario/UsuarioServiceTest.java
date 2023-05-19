@@ -2,11 +2,12 @@ package com.ibmshop.userapi.unittest.usuario;
 
 
 
-import static com.ibmshop.userapi.commons.usuarios.UsuariosConstant.INVALID_USUARIODTO;
-import static com.ibmshop.userapi.commons.usuarios.UsuariosConstant.USUARIO;
-import static com.ibmshop.userapi.commons.usuarios.UsuariosConstant.USUARIOOP;
-import static com.ibmshop.userapi.commons.usuarios.UsuariosConstant.INVALID_USUARIOOP;
-import static com.ibmshop.userapi.commons.usuarios.UsuariosConstant.INVALID_USUARIO;
+import static com.ibmshop.userapi.commons.UsuariosConstant.INVALID_USUARIO;
+import static com.ibmshop.userapi.commons.UsuariosConstant.INVALID_USUARIODTO;
+import static com.ibmshop.userapi.commons.UsuariosConstant.INVALID_USUARIOOP;
+import static com.ibmshop.userapi.commons.UsuariosConstant.USUARIO;
+import static com.ibmshop.userapi.commons.UsuariosConstant.USUARIOUPDATE;
+import static com.ibmshop.userapi.commons.UsuariosConstant.USUARIOOP;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -45,7 +46,7 @@ public class UsuarioServiceTest {
 		usuarioRepository.save(USUARIO);
 		assertThat(USUARIO).isEqualTo(USUARIO);
 		
-		/* o Teste passou, mas acredito estar errado, pois não ouve a chamada do service
+		/* o Teste passou, mas acredito estar errado, pois não houve a chamada do service
 		 * do tipo UsuarioDTO.
 		 * Confusão na hora de chaamar o service(UserioDTO) e repository(Usuario)
 		 */
@@ -127,6 +128,31 @@ public class UsuarioServiceTest {
     	ResponseEntity<Usuario> sut = usuarioService.encontrarPorCpf(cpf);
     	
     	assertThat(sut).isEqualTo(ResponseEntity.notFound().build());
+    }
+    
+    @Test
+    public void UpdateUsuario_ByExistingId_ReturnUsuario() {
+    	
+    	when(usuarioRepository.save(USUARIO)).thenReturn(USUARIO);
+    	
+    	ResponseEntity<Usuario> sut = usuarioService.atualizarUsuario(1, USUARIOUPDATE);
+    	
+    	assertThat(sut).isEqualTo(USUARIO);
+    }
+    
+    @Test
+    public void UpdateUsuario_ByUnexistingId_ReturnNotFound() {
+    	//when(usuarioRepository.delete(USUARIO));
+    }
+    
+    @Test
+    public void DeleteUsuario_ByExistingId_ReturnEmpty() {
+    	
+    }
+    
+    @Test
+    public void DeleteUsuario_ByUnexistingId_ReturnNotFound() {
+    	
     }
 
 

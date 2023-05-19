@@ -1,4 +1,4 @@
-package com.ibmshop.userapi.commons.usuarios;
+package com.ibmshop.userapi.commons;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -21,6 +21,7 @@ public class UsuariosConstant {
 	public static final Optional<Usuario> USUARIOOP = Optional.of(new Usuario(28,"Nelson","Soares","420.197.488-00","+055 (11) 97959-3152",LocalDate.now(),LocalDate.now(),Pergunta.SIM,endereco));
 	public static final Optional<Usuario> INVALID_USUARIOOP = Optional.of(new Usuario(28,"","Soares","420.197.488-00","+055 (11) 97959-3152",LocalDate.now(),LocalDate.now(),Pergunta.SIM,endereco));
 	public static final Usuario USUARIO = new Usuario(28,"Nelson","Soares","420.197.488-00","+055 (11) 97959-3152",LocalDate.now(),LocalDate.now(),Pergunta.SIM,endereco);
+	public static final UsuarioDTO USUARIOUPDATE = new UsuarioDTO("Custodio","Soares","420.197.488-00",ENDDTO,"+055 (11) 97959-3152");
 	public static final UsuarioDTO USUARIODTO = new UsuarioDTO("Nelson","Soares","420.197.488-00",ENDDTO,"+055 (11) 97959-3152");
 	public static final UsuarioDTO INVALID_USUARIODTO = new UsuarioDTO();
 	public static final Usuario INVALID_USUARIO = new Usuario(28,null,"Soares","123.456.798-10","+055 (11) 97959-3152",LocalDate.now(),LocalDate.now(),Pergunta.SIM,endereco);
