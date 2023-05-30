@@ -55,7 +55,7 @@ public class UsuarioController {
 			@ApiResponse(responseCode = "404", description = "Usuário não encontrado!"),
 			@ApiResponse(responseCode = "500", description = "Erro ao buscar usuário!")
 	})
-	@GetMapping("{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<Usuario> findById(@PathVariable("id") Integer id) {
 		return service
 				.buscarPorId(id);

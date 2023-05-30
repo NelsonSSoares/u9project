@@ -23,37 +23,39 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
-@Tag(name = "IBM Shop - Shopping API")
+@Tag(name = "IBM Shop - User - Enderecos API")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("ibm/enderecos")
+@RequestMapping("ibm/usuarios/enderecos")
 public class EnderecoController {
 	
 	private final EnderecoService service;
 	
 	@GetMapping
 	public ResponseEntity<List<Endereco>> getAll(){
-		return null;
+		return service.obterTodos();
+	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<EnderecoDTO> getBydId(@PathVariable("id") Integer id){
+		return service.buscarPorId(id);
 	}
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<Endereco> save(@RequestBody @Valid EnderecoDTO endDto) {
-		// TODO Auto-generated method stub
-		return null;
+		return service.salvar(endDto);
 	}
 
 	@PutMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public ResponseEntity<Endereco> update(@PathVariable("id") Integer id,@RequestBody @Valid EnderecoDTO endDto) {
-		// TODO Auto-generated method stub
-		return null;
+		return service.atualizar(id, endDto);
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Endereco> delete(@PathVariable("id") Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return service.deletar(id);
 	}
 	
 	

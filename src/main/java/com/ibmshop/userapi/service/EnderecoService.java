@@ -1,5 +1,7 @@
 package com.ibmshop.userapi.service;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 
 import com.ibmshop.userapi.domain.dto.EnderecoDTO;
@@ -12,6 +14,10 @@ public interface EnderecoService {
 	ResponseEntity<Endereco> atualizar(Integer id, EnderecoDTO endDto);
 	
 	ResponseEntity<Endereco> deletar(Integer id);
+
+	ResponseEntity<EnderecoDTO> buscarPorId(Integer id);
+
+	ResponseEntity<List<Endereco>> obterTodos();
 	
 	
 }
