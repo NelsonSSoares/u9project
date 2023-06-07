@@ -55,6 +55,10 @@ public class EnderecoServiceImpl implements EnderecoService {
 		endereco.setPais(pais);
 		System.out.println(endereco);
 		log.info("ENDERECO ANTES DE SALVAR: " + endereco);
+		if(usuarioRepositoty.findById(endereco.getUsuarioId()) == null) {
+			
+			return ResponseEntity.notFound().build();
+		}
 		enderecoRepository.save(endereco);
 		return ResponseEntity.status(HttpStatus.CREATED).body(endereco);
 	}
@@ -87,6 +91,13 @@ public class EnderecoServiceImpl implements EnderecoService {
 		enderecoRepository.deleteById(id);
 		
 		return ResponseEntity.noContent().build();
+	}
+	
+	
+	@Override
+	public ResponseEntity<List<Endereco>> obterPorUsuarioId(Integer id) {
+		List<Endereco> enderecos = enderecoRepository.findByUsuarioId(id);
+		return ResponseEntity.ok(enderecos);
 	}
 
 

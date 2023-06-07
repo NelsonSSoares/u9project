@@ -41,6 +41,11 @@ public class EnderecoController {
 		return service.buscarPorId(id);
 	}
 	
+	@GetMapping("byUser/{id}")
+	public ResponseEntity<List<Endereco>> getAddressByUserId(@PathVariable("id")Integer id){
+		return service.obterPorUsuarioId(id);
+	}
+	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<Endereco> save(@RequestBody @Valid EnderecoDTO endDto) {

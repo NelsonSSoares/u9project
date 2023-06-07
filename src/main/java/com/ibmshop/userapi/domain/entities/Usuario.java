@@ -18,6 +18,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -28,7 +30,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "usuario")
+@Table(name = "usuario",uniqueConstraints = {@UniqueConstraint(columnNames = {"cpf"})})
 public class Usuario {
 
 	@Id
@@ -63,13 +65,21 @@ public class Usuario {
 	@NotNull(message = "${}")
 	@DateTimeFormat(pattern = "YYYY-MM-DD")
 	private LocalDate dataModificacao;
+	
+	@Email
+	@NotEmpty
+	private String email;
+	
+	@NotEmpty
+	private String password;
+	
+	@NotEmpty
+	private String role;
+	
 
 	@NotNull(message = "${}")
 	@Enumerated(EnumType.ORDINAL)
 	private Pergunta ativo;
 
-	@OneToMany(mappedBy = "usuarioId", cascade = CascadeType.ALL)
-	// @JoinColumn(name = "endereco")
-	private List<Endereco> endereco;
 
 }

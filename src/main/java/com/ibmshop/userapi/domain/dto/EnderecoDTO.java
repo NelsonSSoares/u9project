@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class EnderecoDTO {
 	
-	//private Integer usuario;
+	private Integer usuarioId;
 	
 	private String apelido;
 	

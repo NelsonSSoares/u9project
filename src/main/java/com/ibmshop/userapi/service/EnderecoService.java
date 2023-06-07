@@ -19,5 +19,6 @@ public interface EnderecoService {
 
 	ResponseEntity<List<Endereco>> obterTodos();
 	
+	ResponseEntity<List<Endereco>> obterPorUsuarioId(Integer id);
 	
 }

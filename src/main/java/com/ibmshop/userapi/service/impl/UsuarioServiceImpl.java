@@ -11,14 +11,9 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ibmshop.userapi.constraints.SomenteUserAtivo;
-import com.ibmshop.userapi.domain.dto.EnderecoDTO;
 import com.ibmshop.userapi.domain.dto.UsuarioDTO;
-import com.ibmshop.userapi.domain.entities.Endereco;
-import com.ibmshop.userapi.domain.entities.Pais;
 import com.ibmshop.userapi.domain.entities.Usuario;
 import com.ibmshop.userapi.domain.enums.Pergunta;
-import com.ibmshop.userapi.domain.repository.Enderecos;
-import com.ibmshop.userapi.domain.repository.Paises;
 import com.ibmshop.userapi.domain.repository.Usuarios;
 import com.ibmshop.userapi.service.UsuarioService;
 
@@ -30,44 +25,20 @@ import lombok.RequiredArgsConstructor;
 public class UsuarioServiceImpl implements UsuarioService{
 	
 	private final Usuarios usuarioRepository;
-	private final Enderecos enderecoRepository;
-	private final Paises paisRepository;
 	private final ObjectMapper objectMapper;
 	
 	@Override
 	@Transactional
 	public ResponseEntity<Usuario> salvar(UsuarioDTO userDto){
 		
-		List<Endereco> enderecos = new ArrayList<Endereco>();
-		
-		for (EnderecoDTO enderecoDto : userDto.getEndereco()) {
-
-			Endereco endereco = objectMapper.convertValue(enderecoDto, Endereco.class);
-			Pais pais = objectMapper.convertValue(endereco.getPais(), Pais.class); 
-			paisRepository.save(pais);
-			endereco.setPais(pais);
-			
-			if(endereco.getEnderecoPadrao().equals(Pergunta.NAO)) {
-				endereco.setEnderecoPadrao(Pergunta.SIM);   
-			}else if(endereco.getEnderecoPadrao().equals(null)) {
-				endereco.setEnderecoPadrao(Pergunta.SIM);
-			}
-			enderecos.add(endereco);
-		}
-			
-		Usuario usuario = objectMapper.convertValue(userDto, Usuario.class);	
-		
-		usuario.setEndereco(enderecos);
-		usuario.setDataCriacao(LocalDate.now());
-		usuario.setDataModificacao(LocalDate.now());
-		usuario.setAtivo(Pergunta.SIM);
-		
-		enderecoRepository.saveAll(enderecos);
-		
-		System.out.println(usuario);
-		usuarioRepository.save(usuario);
-		
-	    return ResponseEntity.ok(usuario);		
+	Usuario usuario = objectMapper.convertValue(userDto, Usuario.class);
+	
+	usuario.setAtivo(Pergunta.SIM);
+	usuario.setDataCriacao(LocalDate.now());
+	usuario.setDataModificacao(LocalDate.now());
+	usuario.setRole("USER");
+	usuarioRepository.save(usuario);
+	return ResponseEntity.ok(usuario); 
 
 	}
 

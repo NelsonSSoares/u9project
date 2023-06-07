@@ -64,9 +64,9 @@ public class Endereco {
 	@JoinColumn(name = "pais_id")
 	private Pais pais;
 	
-	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Usuario.class)
-	@JoinColumn(name = "usuario_id")
-	private Usuario usuarioId;
+//	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Usuario.class)
+//	@JoinColumn(name = "usuario_id")
+	private Integer usuarioId;
 	
 	
 	@Enumerated(EnumType.ORDINAL)
