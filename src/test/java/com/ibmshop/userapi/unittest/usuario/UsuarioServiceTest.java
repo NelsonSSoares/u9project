@@ -25,10 +25,10 @@ import org.mockito.stubbing.Answer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import com.apishop.userapi.domain.entities.Usuario;
+import com.apishop.userapi.domain.repository.Usuarios;
+import com.apishop.userapi.service.impl.UsuarioServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ibmshop.userapi.domain.entities.Usuario;
-import com.ibmshop.userapi.domain.repository.Usuarios;
-import com.ibmshop.userapi.service.impl.UsuarioServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
 public class UsuarioServiceTest {

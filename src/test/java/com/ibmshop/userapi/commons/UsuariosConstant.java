@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.ibmshop.userapi.domain.dto.EnderecoDTO;
-import com.ibmshop.userapi.domain.dto.PaisDTO;
-import com.ibmshop.userapi.domain.dto.UsuarioDTO;
-import com.ibmshop.userapi.domain.entities.Endereco;
-import com.ibmshop.userapi.domain.entities.Usuario;
-import com.ibmshop.userapi.domain.enums.Pergunta;
+import com.apishop.userapi.domain.dto.EnderecoDTO;
+import com.apishop.userapi.domain.dto.PaisDTO;
+import com.apishop.userapi.domain.dto.UsuarioDTO;
+import com.apishop.userapi.domain.entities.Endereco;
+import com.apishop.userapi.domain.entities.Usuario;
+import com.apishop.userapi.domain.enums.Pergunta;
 
 public class UsuariosConstant {
 	public static final PaisDTO PAIS = new PaisDTO("Brasil","+055");

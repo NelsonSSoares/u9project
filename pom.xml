@@ -9,11 +9,11 @@
 		<version>3.0.3</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.ibmshop</groupId>
+	<groupId>com.u9project</groupId>
 	<artifactId>userapi</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>userapi</name>
-	<description>User Api for IBM Shop Ecommerce Associates Project</description>
+	<description>User Api for Shop Ecommerce</description>
 	<properties>
 		<java.version>17</java.version>
 		<springdoc-version>1.7.0</springdoc-version>
@@ -79,10 +79,6 @@
 			<version>2.0.0</version>
 		</dependency>
 
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-		</dependency>
 	</dependencies>
 
 	<build>
@@ -113,14 +109,5 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-	<repositories>
-		<repository>
-			<id>netflix-candidates</id>
-			<name>Netflix Candidates</name>
-			<url>https://artifactory-oss.prod.netflix.net/artifactory/maven-oss-candidates</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
+	
 </project>
