@@ -17,9 +17,7 @@ public interface Usuarios extends JpaRepository<Usuario, Integer> {
 	
 	@Query(value = "select * from usuario u where u.cpf = :cpf", nativeQuery = true)
 	Optional<Usuario> findByCpf(@Param("cpf") String cpf);
-	
-	//Optional<Usuario> findByCpf(String cpf);
-	
+
 	List<Usuario> findByNome(String nome);
 
 }

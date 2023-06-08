@@ -38,16 +38,16 @@ public class Usuario {
 	private Integer id;
 
 	@Column(length = 255)
-	@NotEmpty(message = "${campo.nome.obrigatorio}")
+	@NotEmpty
 	private String nome;
 
 	@Column(length = 255)
-	@NotEmpty(message = "${campo.nome.obrigatorio}")
+	@NotEmpty
 	private String sobrenome;
 
 	@Column(length = 14)
-	@NotEmpty(message = "${}")
-	@CPF(message = "${campo.cpf.obrigatorio}")
+	@NotEmpty
+	@CPF
 	private String cpf;
 
 	// @Pattern(regexp =
@@ -57,12 +57,11 @@ public class Usuario {
 	private String telefone;
 
 	@Column(name = "data_criacao")
-	@NotNull(message = "${}")
-	// @NotBlank
+	@NotNull
 	private LocalDate dataCriacao;
 
 	@Column(name = "data_modificacao")
-	@NotNull(message = "${}")
+	@NotNull
 	@DateTimeFormat(pattern = "YYYY-MM-DD")
 	private LocalDate dataModificacao;
 	
@@ -77,7 +76,7 @@ public class Usuario {
 	private String role;
 	
 
-	@NotNull(message = "${}")
+	@NotNull
 	@Enumerated(EnumType.ORDINAL)
 	private Pergunta ativo;
 

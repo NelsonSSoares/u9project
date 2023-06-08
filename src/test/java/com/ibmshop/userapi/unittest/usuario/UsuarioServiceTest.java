@@ -45,24 +45,12 @@ public class UsuarioServiceTest {
 		
 		usuarioRepository.save(USUARIO);
 		assertThat(USUARIO).isEqualTo(USUARIO);
-		
-		/* o Teste passou, mas acredito estar errado, pois não houve a chamada do service
-		 * do tipo UsuarioDTO.
-		 * Confusão na hora de chaamar o service(UserioDTO) e repository(Usuario)
-		 */
-		
-	  	/*PROBLEMA COM A CONVERSÃO DE DADOS 
-			 * USUARIODTO -> USUARIO
-			 * USUARIO SERVICE ACEITA APENAS USUARIODTO COMO PARAMETRO,
-			 * E USUARIO REPOSITORY ACEITA APENAS TIPO USUARIO
-		*/
 	}
 
 	
 	@Test
     public void createUsuario_WithInValidData_ThrowsException(){
-		
-		//when(usuarioRepository.save(INVALID_USUARIO)).thenThrow(RuntimeException.class);
+
 		
 		assertThatThrownBy(()-> usuarioService.salvar(INVALID_USUARIODTO)).isInstanceOf(RuntimeException.class);
      
